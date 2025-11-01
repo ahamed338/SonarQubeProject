@@ -1,6 +1,6 @@
 # DevOps Learning Lab 🚀
 
-A hands-on self-learning project to understand **Kubernetes (conceptually)**, **Helm**, **Terraform**, and **SonarQube** without needing cloud access or a powerful laptop.
+A hands-on self-learning project to understand **Kubernetes (conceptually)**, **Helm**, **Terraform**, and **SonarQube**. Optimized for **GitHub Codespaces** - run everything in the cloud with zero local setup!
 
 ## 📁 Project Structure
 
@@ -27,51 +27,55 @@ devops-lab/
 └── CODESPACES.md         # Quick Codespaces guide
 ```
 
-## 🚀 Quick Start
+## 🚀 Quick Start (GitHub Codespaces)
 
-### GitHub Codespaces (Recommended)
+This project is optimized for **GitHub Codespaces** - everything runs in the cloud with zero local setup!
 
-1. Click the green **"Code"** button
-2. Select **"Codespaces"** tab
+### Getting Started
+
+1. Click the green **"Code"** button in this repository
+2. Select the **"Codespaces"** tab
 3. Click **"Create codespace on main"**
 4. Wait ~2-3 minutes for automatic setup
-5. Everything is ready! Docker, Terraform, Helm, Checkov, and yamllint are pre-installed.
+5. **Everything is ready!** Docker, Terraform, Helm, Checkov, and yamllint are pre-installed automatically.
 
-See [CODESPACES.md](./devops-lab/CODESPACES.md) for detailed Codespaces instructions.
+### Your First Steps (in Codespaces)
 
-### Local Setup
+Once your Codespace is ready, try these commands:
 
-1. **Prerequisites:**
-   - Docker Desktop
-   - Terraform CLI: `brew install terraform`
-   - Helm CLI: `brew install helm`
-   - Python 3 (for Checkov and yamllint)
+```bash
+# 1. Start SonarQube
+cd sonar-docker
+docker compose up -d
 
-2. **Start SonarQube:**
-   ```bash
-   cd devops-lab/sonar-docker
-   docker compose up -d
-   # Access at http://localhost:9000 (default: admin/admin)
-   ```
+# 2. Access SonarQube (check the Ports tab → port 9000 → Open in Browser)
+# Default credentials: admin/admin
 
-3. **Explore Helm:**
-   ```bash
-   cd devops-lab/helm-learn
-   helm template .
-   ```
+# 3. Explore Helm charts
+cd helm-learn
+helm template .
 
-4. **Run Terraform:**
-   ```bash
-   cd devops-lab/terraform-local
-   terraform init
-   terraform plan
-   ```
+# 4. Run Terraform
+cd terraform-local
+terraform init
+terraform plan
 
-5. **Security Scanning:**
-   ```bash
-   checkov -d devops-lab
-   yamllint devops-lab
-   ```
+# 5. Security scanning
+checkov -d .
+yamllint .
+```
+
+See [CODESPACES.md](./devops-lab/CODESPACES.md) for detailed instructions and troubleshooting.
+
+### Alternative: Local Setup (Optional)
+
+If you prefer to run locally, you'll need to install:
+- Docker Desktop
+- Terraform CLI: `brew install terraform`
+- Helm CLI: `brew install helm`
+- Python 3 (for Checkov and yamllint): `brew install python3`
+
+Then follow the same commands above in your local terminal.
 
 ## 📚 Learning Path
 
@@ -108,8 +112,8 @@ This project includes automated security scanning:
 ## 🎯 Project Goals
 
 - **Learn by doing**: Hands-on experience with real DevOps tools
-- **GitHub Codespaces Ready**: Optimized for cloud development environment
-- **No cloud required**: Everything runs locally or in free GitHub Codespaces
+- **GitHub Codespaces Optimized**: Zero local setup - everything runs in the cloud
+- **Free tier available**: 60 hours/month of Codespaces for personal accounts
 - **Resource-friendly**: Lightweight containers work on any machine
 - **Beginner-friendly**: Clear explanations at every step
 
