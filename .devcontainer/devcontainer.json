@@ -1,75 +1,25 @@
 {
-  // GitHub Codespaces Configuration
-  // This file tells Codespaces how to set up your development environment
-  // The postCreateCommand automatically runs the setup script when the Codespace starts
-  // This installs: Terraform, Helm, Checkov, yamllint, and sets up aliases
-  // If setup doesn't run automatically, manually run: cd devops-lab && bash .devcontainer/setup.sh
-
-  "name": "DevOps Learning Lab",
+  "name": "SonarQube Dev Environment",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-  
-  // Features to install in the container
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {
-      "version": "latest",
-      "dockerDashComposeVersion": "v2"
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11"
     },
-    "ghcr.io/devcontainers/features/github-cli:1": {
-      "version": "latest"
-    }
+    "ghcr.io/devcontainers/features/terraform:1": {}
   },
-
-  // Customizations for VS Code/Cursor
+  "postCreateCommand": "apt-get update && apt-get install -y curl unzip jq && curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash",
   "customizations": {
     "vscode": {
       "extensions": [
-        "hashicorp.terraform",              // Terraform syntax highlighting
-        "ms-kubernetes-tools.vscode-kubernetes-tools",  // K8s tools
-        "redhat.vscode-yaml",               // YAML support
-        "ms-azuretools.vscode-docker",      // Docker support
-        "esbenp.prettier-vscode"            // Code formatter
-      ],
-      "settings": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-      }
+        "hashicorp.terraform",
+        "ms-azuretools.vscode-docker",
+        "redhat.vscode-yaml",
+        "ms-python.python",
+        "eamodio.gitlens"
+      ]
     }
   },
-
-  // Commands to run after container is created
-  // This will automatically run the setup script to install all tools
-  // Installs: Terraform, Helm, Checkov, yamllint, and sets up aliases
-  "postCreateCommand": "bash -c 'if [ -f devops-lab/.devcontainer/setup.sh ]; then chmod +x devops-lab/.devcontainer/setup.sh && cd devops-lab && bash .devcontainer/setup.sh || echo \"⚠️  Setup script encountered errors, but continuing...\"; else echo \"⚠️  Setup script not found\"; fi'",
-  
-  // Backup command that runs when container starts (if postCreateCommand fails)
-  // This ensures setup runs even if postCreateCommand didn't complete
-  "postStartCommand": "bash -c 'git config --global --add safe.directory ${containerWorkspaceFolder} 2>/dev/null; if ! command -v terraform &>/dev/null || ! command -v checkov &>/dev/null || ! command -v yamllint &>/dev/null; then echo \"🔧 Missing tools detected, running setup...\"; cd devops-lab && bash .devcontainer/setup.sh 2>&1 || echo \"⚠️  Setup script had errors\"; fi'",
-
-  // Port forwarding (automatically forwarded in Codespaces)
-  // SonarQube will be accessible via Codespaces port forwarding
-  "forwardPorts": [9000, 5432],
-  "portsAttributes": {
-    "9000": {
-      "label": "SonarQube",
-      "onAutoForward": "notify"
-    },
-    "5432": {
-      "label": "PostgreSQL",
-      "onAutoForward": "silent"
-    }
-  },
-
-  // Environment variables
-  "containerEnv": {
-    "DOCKER_BUILDKIT": "1",
-    "COMPOSE_DOCKER_CLI_BUILD": "1"
-  },
-
-  // Optional: Use docker-compose for more complex setups
-  // Uncomment if you want to use the docker-compose.yml in this directory
-  // "dockerComposeFile": "../sonar-docker/docker-compose.yml",
-  // "service": "codespace",
-  // "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
-
+  "remoteUser": "vscode"
 }
-
