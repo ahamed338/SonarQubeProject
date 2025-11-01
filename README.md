@@ -36,14 +36,30 @@ This project is optimized for **GitHub Codespaces** - everything runs in the clo
 1. Click the green **"Code"** button in this repository
 2. Select the **"Codespaces"** tab
 3. Click **"Create codespace on main"**
-4. Wait ~2-3 minutes for automatic setup
-5. **Everything is ready!** Docker, Terraform, Helm, Checkov, and yamllint are pre-installed automatically.
+4. Wait ~1-2 minutes for the Codespace to start
+5. **Run the setup script** to install all tools:
+   ```bash
+   cd devops-lab
+   bash .devcontainer/setup.sh
+   ```
+   This will install Docker, Terraform, Helm, Checkov, and yamllint (~2-3 minutes)
+6. After setup completes, reload your shell: `source ~/.bashrc`
 
 ### Your First Steps (in Codespaces)
 
-Once your Codespace is ready, the setup script will automatically install all tools. If tools aren't installed yet, wait a few minutes or run: `bash .devcontainer/setup.sh`
+**First, run the setup script to install all tools:**
 
-Then navigate to the devops-lab directory and try these commands:
+```bash
+cd devops-lab
+bash .devcontainer/setup.sh
+```
+
+Wait for the setup to complete (~2-3 minutes), then reload your shell:
+```bash
+source ~/.bashrc
+```
+
+**Now you're ready! Try these commands:**
 
 ```bash
 # Navigate to the devops-lab directory first
@@ -73,17 +89,19 @@ yamllint .
 
 See [CODESPACES.md](./devops-lab/CODESPACES.md) for detailed instructions and troubleshooting.
 
-**Note**: If you get "command not found" errors, the setup script may still be running. Wait a few minutes, then check if tools are installed:
+**Important**: The setup script must be run manually first! Run:
+```bash
+cd devops-lab
+bash .devcontainer/setup.sh
+source ~/.bashrc
+```
+
+Then verify tools are installed:
 ```bash
 terraform --version
 helm --version
 checkov --version
 yamllint --version
-```
-
-If tools aren't installed after a few minutes, manually run the setup:
-```bash
-bash devops-lab/.devcontainer/setup.sh
 ```
 
 ### Alternative: Local Setup (Optional)

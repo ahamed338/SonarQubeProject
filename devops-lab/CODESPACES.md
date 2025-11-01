@@ -22,18 +22,36 @@ git push -u origin main
 4. Click **"Create codespace on main"**
 5. Wait ~2-3 minutes for environment setup
 
-### 3. Automatic Setup
+### 3. Run Setup Script
 
-When the Codespace starts, it automatically:
-- ✅ Installs Docker and Docker Compose
-- ✅ Installs Terraform
-- ✅ Installs Helm
-- ✅ Configures VS Code extensions
-- ✅ Sets up helpful aliases
+**Important**: You must manually run the setup script to install all tools.
+
+```bash
+# Navigate to devops-lab directory
+cd devops-lab
+
+# Run the setup script
+bash .devcontainer/setup.sh
+```
+
+This will install:
+- ✅ Docker and Docker Compose (usually pre-installed in Codespaces)
+- ✅ Terraform
+- ✅ Helm
+- ✅ Checkov (security scanner)
+- ✅ yamllint (YAML linter)
+- ✅ Helpful aliases
+
+Wait ~2-3 minutes for setup to complete.
 
 ### 4. Verify Setup
 
+After setup completes, reload your shell and verify tools are installed:
+
 ```bash
+# Reload your shell environment
+source ~/.bashrc
+
 # Check all tools are installed
 docker --version
 terraform version
@@ -43,12 +61,6 @@ yamllint --version
 
 # You should see all commands working!
 ```
-
-**If any tools show "command not found":**
-1. Wait a few more minutes - the setup script may still be running
-2. Check if setup is running: `ps aux | grep setup.sh`
-3. Manually run setup: `bash devops-lab/.devcontainer/setup.sh`
-4. After setup completes, reload your terminal or run: `source ~/.bashrc`
 
 ## 🐳 Start SonarQube
 
@@ -163,13 +175,16 @@ git push
 - Restart the Codespace: Codespaces → **Rebuild Container**
 
 **Setup script didn't run?**
-- Run manually: `bash devops-lab/.devcontainer/setup.sh`
-- Wait for script to complete (installs Terraform, Helm, Checkov, yamllint)
+- The setup script must be run manually first
+- Run: `cd devops-lab && bash .devcontainer/setup.sh`
+- Wait for script to complete (~2-3 minutes)
+- After completion, run: `source ~/.bashrc` to reload your shell
 
 **Commands not found (terraform, helm, checkov, yamllint)?**
-- The setup script may still be running - wait 2-3 minutes
-- Check if setup is running: `ps aux | grep setup.sh`
+- You need to run the setup script first: `bash devops-lab/.devcontainer/setup.sh`
+- Wait for script to complete (~2-3 minutes)
 - After setup completes, run: `source ~/.bashrc` to reload your shell
+- Then verify tools are installed with version commands
 
 **Need more resources?**
 - Codespaces automatically scales based on usage

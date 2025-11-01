@@ -1,10 +1,10 @@
 {
   // GitHub Codespaces Configuration
   // This file tells Codespaces how to set up your development environment
-  // When you open this repo in Codespaces, it will automatically:
-  // - Install Docker, Terraform, Helm
-  // - Configure the environment
-  // - Make everything ready to use
+  // IMPORTANT: After the Codespace starts, you must manually run:
+  //   cd devops-lab && bash .devcontainer/setup.sh
+  // This installs: Terraform, Helm, Checkov, yamllint, and sets up aliases
+  // The postCreateCommand may not always run automatically in Codespaces
 
   "name": "DevOps Learning Lab",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
@@ -38,7 +38,11 @@
   },
 
   // Commands to run after container is created
-  "postCreateCommand": "bash .devcontainer/setup.sh",
+  // Note: postCreateCommand may not always run automatically in Codespaces
+  // You will need to manually run the setup script after the Codespace starts:
+  // cd devops-lab && bash .devcontainer/setup.sh
+  // The script installs: Terraform, Helm, Checkov, yamllint, and sets up aliases
+  "postCreateCommand": "cd devops-lab && bash .devcontainer/setup.sh || echo '⚠️  Setup script not run automatically. Run manually: cd devops-lab && bash .devcontainer/setup.sh'",
 
   // Port forwarding (automatically forwarded in Codespaces)
   // SonarQube will be accessible via Codespaces port forwarding
