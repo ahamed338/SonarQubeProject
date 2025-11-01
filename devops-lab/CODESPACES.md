@@ -38,13 +38,24 @@ When the Codespace starts, it automatically:
 docker --version
 terraform version
 helm version
+checkov --version
+yamllint --version
 
 # You should see all commands working!
 ```
 
+**If any tools show "command not found":**
+1. Wait a few more minutes - the setup script may still be running
+2. Check if setup is running: `ps aux | grep setup.sh`
+3. Manually run setup: `bash devops-lab/.devcontainer/setup.sh`
+4. After setup completes, reload your terminal or run: `source ~/.bashrc`
+
 ## 🐳 Start SonarQube
 
 ```bash
+# Navigate to devops-lab directory first (if not already there)
+cd devops-lab
+
 # Navigate to SonarQube directory
 cd sonar-docker
 
@@ -68,6 +79,10 @@ docker compose logs -f sonarqube
 ## 📦 Explore Helm Charts
 
 ```bash
+# Navigate to devops-lab directory first (if not already there)
+cd devops-lab
+
+# Navigate to Helm chart directory
 cd helm-learn
 
 # Validate chart
@@ -83,6 +98,10 @@ helm template . --debug
 ## 🏗️ Run Terraform
 
 ```bash
+# Navigate to devops-lab directory first (if not already there)
+cd devops-lab
+
+# Navigate to Terraform directory
 cd terraform-local
 
 # Initialize
@@ -144,7 +163,13 @@ git push
 - Restart the Codespace: Codespaces → **Rebuild Container**
 
 **Setup script didn't run?**
-- Run manually: `bash .devcontainer/setup.sh`
+- Run manually: `bash devops-lab/.devcontainer/setup.sh`
+- Wait for script to complete (installs Terraform, Helm, Checkov, yamllint)
+
+**Commands not found (terraform, helm, checkov, yamllint)?**
+- The setup script may still be running - wait 2-3 minutes
+- Check if setup is running: `ps aux | grep setup.sh`
+- After setup completes, run: `source ~/.bashrc` to reload your shell
 
 **Need more resources?**
 - Codespaces automatically scales based on usage

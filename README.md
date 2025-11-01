@@ -41,9 +41,14 @@ This project is optimized for **GitHub Codespaces** - everything runs in the clo
 
 ### Your First Steps (in Codespaces)
 
-Once your Codespace is ready, try these commands:
+Once your Codespace is ready, the setup script will automatically install all tools. If tools aren't installed yet, wait a few minutes or run: `bash .devcontainer/setup.sh`
+
+Then navigate to the devops-lab directory and try these commands:
 
 ```bash
+# Navigate to the devops-lab directory first
+cd devops-lab
+
 # 1. Start SonarQube
 cd sonar-docker
 docker compose up -d
@@ -52,20 +57,34 @@ docker compose up -d
 # Default credentials: admin/admin
 
 # 3. Explore Helm charts
-cd helm-learn
+cd ../helm-learn
 helm template .
 
 # 4. Run Terraform
-cd terraform-local
+cd ../terraform-local
 terraform init
 terraform plan
 
-# 5. Security scanning
+# 5. Security scanning (from devops-lab directory)
+cd ..
 checkov -d .
 yamllint .
 ```
 
 See [CODESPACES.md](./devops-lab/CODESPACES.md) for detailed instructions and troubleshooting.
+
+**Note**: If you get "command not found" errors, the setup script may still be running. Wait a few minutes, then check if tools are installed:
+```bash
+terraform --version
+helm --version
+checkov --version
+yamllint --version
+```
+
+If tools aren't installed after a few minutes, manually run the setup:
+```bash
+bash devops-lab/.devcontainer/setup.sh
+```
 
 ### Alternative: Local Setup (Optional)
 
