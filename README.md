@@ -36,25 +36,23 @@ This project is optimized for **GitHub Codespaces** - everything runs in the clo
 1. Click the green **"Code"** button in this repository
 2. Select the **"Codespaces"** tab
 3. Click **"Create codespace on main"**
-4. Wait ~1-2 minutes for the Codespace to start
-5. **Run the setup script** to install all tools:
-   ```bash
-   cd devops-lab
-   bash .devcontainer/setup.sh
-   ```
-   This will install Docker, Terraform, Helm, Checkov, and yamllint (~2-3 minutes)
-6. After setup completes, reload your shell: `source ~/.bashrc`
+4. Wait ~3-5 minutes for the Codespace to start and automatically set up
+   - The setup script runs automatically in the background
+   - It installs Docker, Terraform, Helm, Checkov, and yamllint
+5. After Codespace starts, reload your shell: `source ~/.bashrc`
+6. Verify tools are installed: `bash devops-lab/verify-setup.sh`
 
 ### Your First Steps (in Codespaces)
 
-**First, run the setup script to install all tools:**
+**The setup script runs automatically when your Codespace starts!** Wait ~3-5 minutes for setup to complete.
 
+If setup doesn't run automatically (or you want to run it again), manually run:
 ```bash
 cd devops-lab
 bash .devcontainer/setup.sh
 ```
 
-Wait for the setup to complete (~2-3 minutes), then reload your shell:
+After setup completes, reload your shell:
 ```bash
 source ~/.bashrc
 ```
@@ -89,19 +87,21 @@ yamllint .
 
 See [CODESPACES.md](./devops-lab/CODESPACES.md) for detailed instructions and troubleshooting.
 
-**Important**: The setup script must be run manually first! Run:
+**Verify Setup**: After your Codespace starts, verify tools are installed:
 ```bash
-cd devops-lab
-bash .devcontainer/setup.sh
-source ~/.bashrc
-```
+# Use the verification script
+bash devops-lab/verify-setup.sh
 
-Then verify tools are installed:
-```bash
+# Or check manually
 terraform --version
-helm --version
+helm version
 checkov --version
 yamllint --version
+```
+
+If tools aren't installed, the setup script may still be running (wait 2-3 more minutes), or run it manually:
+```bash
+cd devops-lab && bash .devcontainer/setup.sh
 ```
 
 ### Alternative: Local Setup (Optional)
