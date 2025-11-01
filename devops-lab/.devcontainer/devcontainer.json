@@ -39,7 +39,11 @@
   // Commands to run after container is created
   // This will automatically run the setup script to install all tools
   // Installs: Terraform, Helm, Checkov, yamllint, and sets up aliases
-  "postCreateCommand": "bash -c 'chmod +x devops-lab/.devcontainer/setup.sh && cd devops-lab && bash .devcontainer/setup.sh'",
+  "postCreateCommand": "bash -c 'if [ -f devops-lab/.devcontainer/setup.sh ]; then chmod +x devops-lab/.devcontainer/setup.sh && cd devops-lab && bash .devcontainer/setup.sh || echo \"⚠️  Setup script encountered errors, but continuing...\"; else echo \"⚠️  Setup script not found\"; fi'",
+  
+  // Backup command that runs when container starts (if postCreateCommand fails)
+  // This ensures setup runs even if postCreateCommand didn't complete
+  "postStartCommand": "bash -c 'git config --global --add safe.directory ${containerWorkspaceFolder} 2>/dev/null; if ! command -v terraform &>/dev/null || ! command -v checkov &>/dev/null || ! command -v yamllint &>/dev/null; then echo \"🔧 Missing tools detected, running setup...\"; cd devops-lab && bash .devcontainer/setup.sh 2>&1 || echo \"⚠️  Setup script had errors\"; fi'",
 
   // Port forwarding (automatically forwarded in Codespaces)
   // SonarQube will be accessible via Codespaces port forwarding
@@ -67,7 +71,5 @@
   // "service": "codespace",
   // "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
 
-  // Configure git
-  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
 }
 
