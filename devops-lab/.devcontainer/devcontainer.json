@@ -63,7 +63,7 @@
   "containerEnv": {
     "DOCKER_BUILDKIT": "1",
     "COMPOSE_DOCKER_CLI_BUILD": "1"
-  }
+  },
 
   // Optional: Use docker-compose for more complex setups
   // Uncomment if you want to use the docker-compose.yml in this directory
