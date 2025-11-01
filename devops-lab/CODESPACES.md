@@ -52,15 +52,22 @@ After setup completes, reload your shell and verify tools are installed:
 # Reload your shell environment
 source ~/.bashrc
 
-# Check all tools are installed
+# Quick manual check
 docker --version
-terraform version
+terraform --version
 helm version
 checkov --version
 yamllint --version
-
-# You should see all commands working!
 ```
+
+**Or use the verification script:**
+
+```bash
+# Run the verification script (from repository root)
+bash devops-lab/verify-setup.sh
+```
+
+This will check all prerequisites and show you what's installed and what's missing.
 
 ## 🐳 Start SonarQube
 
