@@ -1,0 +1,30 @@
+# Helm Chart Metadata
+# This file defines metadata about your Helm chart (like a package manifest)
+# Helm is a package manager for Kubernetes (like apt/yum for Linux, npm for Node.js)
+# 
+# In a real scenario:
+# - You'd install this chart onto a Kubernetes cluster
+# - Helm would create Kubernetes resources (pods, services, etc.) based on your templates
+# - Without a real cluster, we're just learning the structure and concepts
+
+apiVersion: v2  # Helm chart API version
+name: sonarqube-app  # Name of your chart (must be lowercase, no spaces)
+description: A Helm chart for learning SonarQube deployment on Kubernetes
+type: application  # Can be "application" or "library"
+version: 0.1.0  # Chart version (following semantic versioning)
+appVersion: "9.9"  # Version of the application (SonarQube) this chart deploys
+
+# Optional: Maintainer information
+maintainers:
+  - name: DevOps Learner
+    email: learner@example.com
+
+# Optional: Keywords for discovery
+keywords:
+  - sonarqube
+  - code-quality
+  - ci-cd
+
+# Optional: Homepage
+home: https://www.sonarqube.org/
+

@@ -1,0 +1,75 @@
+# Kubernetes Deployment Template
+# This file defines a Kubernetes Deployment using Helm templating syntax
+# 
+# What is a Deployment?
+# - A Kubernetes resource that manages a set of identical pods
+# - Handles rolling updates, rollbacks, scaling, etc.
+# - Ensures desired number of pod replicas are running
+#
+# Helm Templating Syntax:
+# - {{ .Values.xxx }} - references values.yaml
+# - {{ .Release.Name }} - name of the Helm release
+# - {{ .Chart.Name }} - chart name from Chart.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}-deployment  # Results in: sonarqube-deployment
+  labels:
+    app: {{ .Values.app.name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.app.replicaCount }}  # Number of pod instances (from values.yaml)
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}  # This deployment manages pods with this label
+  template:  # Pod template (what each pod should look like)
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}
+    spec:
+      containers:
+      - name: {{ .Values.app.name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        
+        ports:
+        - containerPort: {{ .Values.service.targetPort }}
+          name: http
+          protocol: TCP
+        
+        # Environment Variables
+        env:
+        - name: SONAR_JDBC_URL
+          value: "jdbc:postgresql://{{ .Values.database.host }}:{{ .Values.database.port }}/{{ .Values.database.name }}"
+        - name: SONAR_JDBC_USERNAME
+          value: {{ .Values.database.username }}
+        - name: SONAR_JDBC_PASSWORD
+          value: {{ .Values.database.password }}
+        
+        # Resource Limits (prevents container from using too much memory/CPU)
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+        
+        # Health Checks
+        # Kubernetes uses these to know if your app is healthy
+        livenessProbe:
+          {{- toYaml .Values.livenessProbe | nindent 10 }}
+        
+        readinessProbe:
+          {{- toYaml .Values.readinessProbe | nindent 10 }}
+
+# How this would work in real Kubernetes:
+# 1. You run: helm install my-sonar .
+# 2. Helm reads Chart.yaml, values.yaml, and this template
+# 3. Helm substitutes {{ .Values.xxx }} with actual values
+# 4. Helm sends the rendered YAML to Kubernetes API
+# 5. Kubernetes creates the Deployment, which creates Pods
+# 6. Your SonarQube app is now running in the cluster!
+
+# To simulate locally (without a real cluster):
+# - You can validate the template: helm template . --debug
+# - This shows you the final YAML that would be sent to Kubernetes
+# - Or use: helm lint . to check for errors
+

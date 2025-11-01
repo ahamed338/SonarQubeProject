@@ -1,0 +1,72 @@
+{
+  // GitHub Codespaces Configuration
+  // This file tells Codespaces how to set up your development environment
+  // When you open this repo in Codespaces, it will automatically:
+  // - Install Docker, Terraform, Helm
+  // - Configure the environment
+  // - Make everything ready to use
+
+  "name": "DevOps Learning Lab",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  
+  // Features to install in the container
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "dockerDashComposeVersion": "v2"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    }
+  },
+
+  // Customizations for VS Code/Cursor
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "hashicorp.terraform",              // Terraform syntax highlighting
+        "ms-kubernetes-tools.vscode-kubernetes-tools",  // K8s tools
+        "redhat.vscode-yaml",               // YAML support
+        "ms-azuretools.vscode-docker",      // Docker support
+        "esbenp.prettier-vscode"            // Code formatter
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+      }
+    }
+  },
+
+  // Commands to run after container is created
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+
+  // Port forwarding (automatically forwarded in Codespaces)
+  // SonarQube will be accessible via Codespaces port forwarding
+  "forwardPorts": [9000, 5432],
+  "portsAttributes": {
+    "9000": {
+      "label": "SonarQube",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL",
+      "onAutoForward": "silent"
+    }
+  },
+
+  // Environment variables
+  "containerEnv": {
+    "DOCKER_BUILDKIT": "1",
+    "COMPOSE_DOCKER_CLI_BUILD": "1"
+  },
+
+  // Optional: Use docker-compose for more complex setups
+  // Uncomment if you want to use the docker-compose.yml in this directory
+  // "dockerComposeFile": "../sonar-docker/docker-compose.yml",
+  // "service": "codespace",
+  // "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
+
+  // Configure git
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
+}
+
