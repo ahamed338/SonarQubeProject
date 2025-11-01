@@ -2,6 +2,11 @@
 # Verification script for DevOps Lab setup
 # Run this after running the setup script to verify all tools are installed correctly
 
+# Reload shell configuration to ensure aliases and PATH are current
+if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+fi
+
 echo "🔍 Verifying DevOps Learning Lab Setup..."
 echo "=========================================="
 echo ""
