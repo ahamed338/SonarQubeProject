@@ -6,8 +6,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://helm.sonatype.com/nexus
-    targetRevision: 4.2.0
+    repoURL: https://oteemo.github.io/charts
+    targetRevision: 10.0.1
     chart: sonarqube
     helm:
       valueFiles:
