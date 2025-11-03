@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sonarqube
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://helm.sonatype.com/nexus
+    targetRevision: 4.2.0
+    chart: sonarqube
+    helm:
+      valueFiles:
+        - https://raw.githubusercontent.com/ahamed338/SonarQubeProject/main/devops-lab/kubernetes/argocd/sonarqube-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sonarqube
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

@@ -1,0 +1,23 @@
+name: Argo CD Sync
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'devops-lab/kubernetes/argocd/**'
+
+jobs:
+  notify-argocd:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup Kubernetes
+      uses: azure/setup-kubectl@v3
+      
+    - name: Sync Argo CD Application
+      run: |
+        kubectl patch app sonarqube -n argocd -p '{"metadata": {"annotations": {"argocd.argoproj.io/refresh": "hard"}}}' --type merge
+      env:
+        KUBECONFIG: ${{ secrets.KUBECONFIG }}

@@ -1,0 +1,46 @@
+# SonarQube Helm Values for Development
+sonarqubeFolder: sonarqubeDeps
+
+# Use Community Edition
+edition: community
+
+# Resource limits for Codespaces
+resources:
+  requests:
+    memory: "1Gi"
+    cpu: "500m"
+  limits:
+    memory: "2Gi"
+    cpu: "1000m"
+
+# PostgreSQL configuration
+postgresql:
+  enabled: true
+  postgresqlDatabase: sonarqube
+  postgresqlUsername: sonarqube
+  postgresqlPassword: sonarqube
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 9000
+
+# Enable persistence (minimal for dev)
+persistence:
+  enabled: true
+  size: 5Gi
+
+# Disable ingress for Codespaces
+ingress:
+  enabled: false
+
+# Security context for Codespaces
+securityContext:
+  enabled: false
